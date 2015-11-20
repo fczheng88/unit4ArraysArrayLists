@@ -8,19 +8,40 @@ public class ArrayOps2
     }
     public void swapFirstAndLast()
     {
-    
+        int last = x[x.length-1];
+        x[x.length-1] = x[0];
+        x[0] = last;
     }
     public void shiftRight()
     {
-    
+        for(int i =x.length-1; i>0;i--)
+        {
+            x[i] = x[i-1];
+        }
     }
-    public void replaceWithZero()
+    public void replaceEvensWithZero()
     {
-    
+        for(int i = 0; i<x.length-1;i++)
+        {
+            x[i] = 0;
+        }
     }
     public void replaceLarger()
     {
-    
+        int[] y=new int[x.length];
+        y[0]=x[0];
+        y[y.length-1]=x[x.length-1];
+        for(int i =1; i<x.length-2;i++)
+        {
+            if(x[i-1]>x[i+1])
+            {
+                y[i]=x[i-1];
+            }
+            else
+            {
+                y[i]=x[i+1];
+            }
+        }
     }
     public void removeMiddle()
     {
@@ -32,19 +53,29 @@ public class ArrayOps2
     }
     public int secondLargest()
     {
+        int largest, secLargest;
+        largest=secLargest=x[0];
+        for(int val: x)
+        {
+            if(val>largest)
+            {
+                secLargest=largest;
+                largest=val;
+            }
+        }
         return secLargest;
     }
     public boolean isSorted()
     {
-        return isSorted;
+        return isSorted();
     }
     public boolean hasAdjDup()
     {
-        return hasAdjDup;
+        return hasAdjDup();
     }
     public boolean hasDuplicate()
     {
-        return hasDuplicate;
+        return hasDuplicate();
     }
     
 }
