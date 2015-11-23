@@ -10,10 +10,13 @@ public class SoundClipDemo
 
       // In this example, we don't need the sample rate.
       // If you do, call clip.getSampleRate();
-
+      
       for (int i = 0; i < samples.length; i++)
       {
-         samples[i] = 3 * samples[i];
+         System.out.print(samples[i]);
+         //samples[i] = 3 * samples[i];
+         samples[i]+= samples[(int)(0.2* 27411)];
+         System.out.println(samples[i]);
       }
       
       clip.show();
