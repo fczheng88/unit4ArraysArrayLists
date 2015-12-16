@@ -65,6 +65,7 @@ public class RadarViewer
             
             frame.repaint();
         }
+        Location loc = radar.findMonster();
         System.out.println("The moster is at "+radar.findMonster());
     }
 

@@ -2,8 +2,8 @@
 /**
  * The model for radar scan and accumulator
  * 
- * @author @gcschmit
- * @version 19 July 2014
+ * @author @gcschmit modified by Felix Zheng
+ * @version 16 Dec 2015
  */
 public class Radar
 {
@@ -92,8 +92,9 @@ public class Radar
 
     /**
      * Finds the monster based on accumulator
+     * @return String A string that describes the location of the monster
      */
-    public String findMonster()
+    public Location findMonster()
     {
         int greatest = accumulator[0][0];
         int x, y;
@@ -110,7 +111,7 @@ public class Radar
                 }
             }
         }
-        return "Row: "+x+"; Column: "+y;
+        return new Location(x, y);
     }
 
     /**
@@ -207,7 +208,7 @@ public class Radar
         // The noiseFraction instance variable is the probability that a given cell will be
         // detected as a false positive. Use the Math.random method to determine if each cell should be set
         // as a false positive.
-        java.util.Random rnd = new java.util.Random(System.currentTimeMillis()*System.currentTimeMillis());
+        java.util.Random rnd = new java.util.Random();
         //
         // !!! add code here !!!
         //
