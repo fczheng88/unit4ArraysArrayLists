@@ -18,6 +18,23 @@ public class RadarViewer
         final int ROWS = 100;
         final int COLS = 100;
         Radar radar = new Radar(ROWS, COLS);
+        System.out.println("Do you want to specify a location? (y/n) ");
+        java.util.Scanner s = new java.util.Scanner(System.in);
+        int monsterLocationRow, monsterLocationCol;
+        if(s.next().toLowerCase().equals("y"))//user specified
+        {
+            System.out.println("Row within "+ROWS+": ");
+            monsterLocationRow=s.nextInt();
+            System.out.println("Column within "+COLS+": ");
+            monsterLocationCol=s.nextInt();
+        }
+        else{ //randomLocation
+            monsterLocationRow = (int)(Math.random() * ROWS);
+            monsterLocationCol = (int)(Math.random() * COLS);
+            System.out.println("The location of the monster was randomly set to: Row: "+monsterLocationRow+"; Column: "+monsterLocationCol);
+        }
+        radar.setMonsterLocation(monsterLocationRow, monsterLocationCol);//sets the monster location
+
         System.out.println("Noise fraction (as a decimal): ");
         radar.setNoiseFraction(new java.util.Scanner(System.in).nextDouble());
         radar.scan();
@@ -40,9 +57,9 @@ public class RadarViewer
         
         // perform 100 scans of the radar wiht a slight pause between each
         // after each scan, instruct the Java Run-Time to redraw the window
-        for(int i = 0; i < 10000; i++)
+        for(int i = 0; i < 100; i++)
         {
-            Thread.sleep(0); // sleep 100 milliseconds (1/10 second)
+            Thread.sleep(100); // sleep 100 milliseconds (1/10 second)
             
             radar.scan();
             

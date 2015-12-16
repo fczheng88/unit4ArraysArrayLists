@@ -13,8 +13,8 @@ import javax.swing.JComponent;
  */
 public class RadarComponent extends JComponent
 {
-    static final int CELL_WIDTH_IN_PIXELS = 2;
-    static final int CELL_HEIGHT_IN_PIXELS = 2;
+    static final int CELL_WIDTH_IN_PIXELS = 3;
+    static final int CELL_HEIGHT_IN_PIXELS = 3;
 
     Radar radar;
     

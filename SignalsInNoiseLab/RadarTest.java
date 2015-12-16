@@ -50,11 +50,12 @@ public class RadarTest
 
         // a frame contains a single component; create the radar component and add it to the frame
         RadarComponent component = new RadarComponent(radar);
-
+        int mRow, mCol;
+        /*---optional user input disabled for a default of "n"---
         System.out.println("Do you want to specify a location? (y/n) ");
         java.util.Scanner s = new java.util.Scanner(System.in);
-
-        int mRow, mCol;
+        
+        
         if(s.next().toLowerCase().equals("y"))
         {
             System.out.println("Row within "+ROWS+": ");
@@ -62,11 +63,11 @@ public class RadarTest
             System.out.println("Column within "+COLS+": ");
             mCol=s.nextInt();
         }
-        else{
+        else{*/
             mRow = (int)(Math.random() * ROWS);
             mCol = (int)(Math.random() * COLS);
             System.out.println("The location of the monster was randomly set to: Row: "+mRow+"; Column: "+mCol);
-        }
+        //}
         radar.setMonsterLocation(mRow, mCol);//sets the monster location
         int iter=100;//number of iterations
         for(int i = 0; i < iter; i++)

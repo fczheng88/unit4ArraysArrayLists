@@ -41,23 +41,6 @@ public class Radar
         accumulator = new int[rows][cols];
 
                 
-        System.out.println("Do you want to specify a location? (y/n) ");
-        java.util.Scanner s = new java.util.Scanner(System.in);
-
-        if(s.next().toLowerCase().equals("y"))//user specified
-        {
-            System.out.println("Row within "+rows+": ");
-            monsterLocationRow=s.nextInt();
-            System.out.println("Column within "+cols+": ");
-            monsterLocationCol=s.nextInt();
-        }
-        else{ //randomLocation
-            monsterLocationRow = (int)(Math.random() * rows);
-            monsterLocationCol = (int)(Math.random() * cols);
-            System.out.println("The location of the monster was randomly set to: Row: "+monsterLocationRow+"; Column: "+monsterLocationCol);
-        }
-        setMonsterLocation(monsterLocationRow, monsterLocationCol);//sets the monster location
-
         numScans= 0;
     }
 
