@@ -5,12 +5,14 @@
  * @author @gcschmit
  * @version 19 July 2014
  */
-public class Radar
+public class Radar2
 {
 
     // stores whether each cell triggered detection for the current scan of the radar
     // (true represents a detected monster, which may be a false positive)
     private boolean[][] currentScan;
+    private boolean[][] prevScan;
+    private boolean[][] possible;
 
     // value of each cell is incremented for each scan in which that cell triggers detection
     private int[][] accumulator;
@@ -31,33 +33,30 @@ public class Radar
      * @param   rows    the number of rows in the radar grid
      * @param   cols    the number of columns in the radar grid
      */
-    public Radar(int rows, int cols)
+    public Radar2(int rows, int cols)
     {
         // initialize the currentScan 2D array and the accumulator 2D array
         //
         // !!! add code here !!!
         //
         currentScan = new boolean[rows][cols];
+        possible = new boolean[rows][cols];
+        for(int i = 0;i<possible.length;i++)
+        {
+            for(int j = 0;j<possible[i].length;j++)
+            {
+                possible[i][j]=false;
+            }
+        }
         accumulator = new int[rows][cols];
 
-                
-        System.out.println("Do you want to specify a location? (y/n) ");
-        java.util.Scanner s = new java.util.Scanner(System.in);
+        // randomly set the location of the monster (can be explicity set through the
+        //  setMonsterLocation method for the unit test
+        monsterLocationRow = (int)(Math.random() * rows);
+        monsterLocationCol = (int)(Math.random() * cols);
+        System.out.println(monsterLocationRow+"+"+monsterLocationCol);
 
-        if(s.next().toLowerCase().equals("y"))//user specified
-        {
-            System.out.println("Row within "+rows+": ");
-            monsterLocationRow=s.nextInt();
-            System.out.println("Column within "+cols+": ");
-            monsterLocationCol=s.nextInt();
-        }
-        else{ //randomLocation
-            monsterLocationRow = (int)(Math.random() * rows);
-            monsterLocationCol = (int)(Math.random() * cols);
-            System.out.println("The location of the monster was randomly set to: Row: "+monsterLocationRow+"; Column: "+monsterLocationCol);
-        }
-        setMonsterLocation(monsterLocationRow, monsterLocationCol);//sets the monster location
-
+        noiseFraction = 0.1;
         numScans= 0;
     }
 
@@ -78,6 +77,9 @@ public class Radar
         // !!! add code here !!!
         //
 
+        //Makes a copy for the previous scan
+        prevScan=currentScan;
+
         //1
         for(int i = 0;i<currentScan.length;i++)
         {
@@ -87,47 +89,81 @@ public class Radar
             }
         }
         //2
-        setMonsterLocation(monsterLocationRow, monsterLocationCol);//sets the monster location
-
+        currentScan[monsterLocationRow][monsterLocationCol]=true;
         //3
         injectNoise();
         //4
+
+        //accumulator display needs to change!
         for(int i = 0;i<currentScan.length;i++)
         {
             for(int j = 0;j<currentScan[i].length;j++)
             {
-                if(currentScan[i][j]==true)
+                if(i==monsterLocationRow&&j==monsterLocationCol)//currentScan[i][j]==true)
                 {
                     accumulator[i][j]+=1;
                 }
+                
+                //do the tests.....
+                
             }
         }
         //5
         numScans++;
+        moveMonster();
 
     }
 
     /**
-     * Finds the monster based on accumulator
+     * Moves the monster in several possible locations:
+     *  - - -
+     *  - X -
+     *  - - -
      */
-    public String findMonster()
+    public void moveMonster()
     {
-        int greatest = accumulator[0][0];
-        int x, y;
-        x=y=0;
-        for(int i = 0;i<currentScan.length;i++)
+        java.util.Random rnd = new java.util.Random(System.currentTimeMillis()*System.currentTimeMillis());
+
+        boolean moveDown=rnd.nextBoolean();
+        boolean moveRight=rnd.nextBoolean();
+        boolean moveUp=rnd.nextBoolean();
+        boolean moveLeft=rnd.nextBoolean();
+
+        int row=monsterLocationRow;
+        int col=monsterLocationCol;
+        if(moveDown)
         {
-            for(int j = 0;j<currentScan[i].length;j++)
-            {
-                if(accumulator[i][j]>greatest)
-                {
-                    greatest=accumulator[i][j];
-                    x =i;
-                    y=j;
-                }
-            }
+            row = monsterLocationRow+1;
         }
-        return "Row: "+x+"; Column: "+y;
+        else if(moveUp)
+        {
+            row = monsterLocationRow-1;
+        }
+        if(moveRight)
+        {
+            col = monsterLocationCol+1;
+        }
+        else if(moveLeft)
+        {
+            col = monsterLocationCol-1;
+        }
+        if(isWithinBounds(row, col))
+        {
+            setMonsterLocation(row, col);
+        }
+        else
+        {
+            moveMonster();
+        }
+    }
+
+    public boolean isWithinBounds(int row, int col)
+    {
+        if(row<=currentScan[0].length&&row>=0&&col<=currentScan.length&&col>0)
+        {
+            return true;
+        }
+        return false;
     }
 
     /**

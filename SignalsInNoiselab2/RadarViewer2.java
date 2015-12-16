@@ -6,7 +6,7 @@ import javax.swing.JFrame;
  * @author @gcschmit
  * @version 19 July 2014
  */
-public class RadarViewer
+public class RadarViewer2
 {
     /**
      * main method for the program which creates and configures the frame for the program
@@ -17,9 +17,8 @@ public class RadarViewer
         // create the radar, set the monster location, and perform the initial scan
         final int ROWS = 100;
         final int COLS = 100;
-        Radar radar = new Radar(ROWS, COLS);
-        System.out.println("Noise fraction (as a decimal): ");
-        radar.setNoiseFraction(new java.util.Scanner(System.in).nextDouble());
+        Radar2 radar = new Radar2(ROWS, COLS);
+        radar.setNoiseFraction(0.10);
         radar.scan();
         
         JFrame frame = new JFrame();
@@ -28,7 +27,7 @@ public class RadarViewer
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         // a frame contains a single component; create the radar component and add it to the frame
-        RadarComponent component = new RadarComponent(radar);
+        RadarComponent2 component = new RadarComponent2(radar);
         frame.add(component);
         
         // set the size of the frame to encompass the contained component
@@ -40,15 +39,14 @@ public class RadarViewer
         
         // perform 100 scans of the radar wiht a slight pause between each
         // after each scan, instruct the Java Run-Time to redraw the window
-        for(int i = 0; i < 10000; i++)
+        for(int i = 0; i < 100; i++)
         {
-            Thread.sleep(0); // sleep 100 milliseconds (1/10 second)
+            Thread.sleep(100); // sleep 100 milliseconds (1/10 second)
             
             radar.scan();
             
             frame.repaint();
         }
-        System.out.println("The moster is at "+radar.findMonster());
     }
 
 }
